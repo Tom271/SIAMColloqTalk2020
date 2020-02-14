@@ -1,0 +1,305 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/serif.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+		<style>
+		* {
+		  box-sizing: border-box;
+		}
+		.float-right {
+			float: right;
+			width: 65%;
+		}
+
+		.column {
+		  float: left;
+		  width:50%;
+		  padding: 0.5px;
+		}
+
+		/* Clearfix (clear floats) */
+		.row::after {
+		  content: "";
+		  clear: both;
+		  display: table;
+		}
+		</style>
+
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-markdown>
+					<textarea data-template>
+						## All Together Now!
+						### Flocking, Herding and Collective Behaviour in Nature
+						#### Tom Hodgson, MIGSAA
+						##### 12/02/2020
+						<small> Supervised by Michela Ottobre & Kevin Painter</small>
+					</textarea>
+				</section>
+
+				<section>
+					<div class="row">
+							<div class="column">
+								<img src="murmuration.jpg" alt="Starling" style="width:100%">
+							</div>
+							<div class="column">
+								<img src="fishschool.png" alt="Fish" style="width:100%">
+							</div>
+						</div>
+				</section>
+
+				<section>
+					<iframe class="stretch" src="https://www.youtube.com/embed/54AhzoIyyZw?autoplay=1&start=37&mute=1&rel=0" frameborder="0"></iframe>
+				</section>
+
+				<section  data-markdown>
+					<script type="text/template">
+						### What rules do individuals follow?
+
+						- How does an individual move? <!-- .element: class="fragment" data-fragment-index="1" -->
+						- How does an individual react to others?<!-- .element: class="fragment" data-fragment-index="2" -->
+						<img data-src="starling_paper.png"> <!-- .element: class="fragment" data-fragment-index="3" -->
+					</script>
+
+				</section>
+
+				<section>
+        	<iframe  class="stretch" id="iframe" src="https://player.vimeo.com/video/212193982?autoplay=1&loop=1" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe><script src="https://player.vimeo.com/api/player.js"></script>
+				</section>
+
+				<section>
+							<table>
+								  <tr>
+								    <th>Pros</th>
+								    <th>Cons</th>
+								  </tr>
+								  <tr>
+								    <td>Easy to code</td>
+								    <td>Calculating interaction can be slow</td>
+								  </tr>
+								  <tr>
+								    <td>Intuitive</td>
+								    <td>Difficult to simulate large numbers...</td>
+								  </tr>
+								  <tr>
+								    <td>Information on individuals</td>
+								    <td></td>
+								  </tr>
+							</table>
+					</section>
+
+			<section data-markdown>
+					<textarea data-template>
+						<img src="murmuration.jpg" alt="murmuration" width=800x/>
+						<!-- ![murmuration](murmuration.jpg) -->
+						$$\mathcal{O}(10^3)$$
+					</textarea>
+			</section>
+
+			<section data-markdown>
+					<textarea data-template>
+							<img src="herring.jpg" alt="herring" width=800x/>
+						<!-- ![herring](herring.jpg) -->
+						$$\mathcal{O}(10^6)$$
+					</textarea>
+			</section>
+
+			<section data-markdown>
+					<textarea data-template>
+							<img src="krill.jpeg" alt="krill" width=800x/>
+						$$>\mathcal{O}(10^9)$$
+					</textarea>
+			</section>
+
+			<section>
+				<div class="row">
+						<div class="column">
+							<img src="skipjackpde.png" alt="Skipjack" style="width:100%">
+							<small>					An advection-diffusion-reaction model for the estimation of
+							fish movement parameters from tagging data, with application
+							to skipjack tuna (Katsuwonus pelamis). Sibert et al. (1999).</small>
+						</div>
+						<div class="column">
+							<img src="painterpde.png" alt="Turtle" style="width:100%">
+							<small> Efficiency of island homing by sea turtles under multimodal
+						 navigating strategies, Painter and Plochocka, (2019)</small>
+						</div>
+					</div>
+			</section>
+
+			<section>
+						<table>
+								<tr>
+									<th>Pros</th>
+									<th>Cons</th>
+								</tr>
+								<tr>
+									<td>Simulation is quicker</td>
+									<td>Difficult to code/solve</td>
+								</tr>
+								<tr>
+									<td>Opens up tools from analysis</td>
+									<td>Can't represent individuals</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td>Restrictive assumptions</td>
+								</tr>
+						</table>
+				</section>
+				<section data-markdown>
+						<textarea data-template>
+							Our Model
+						</textarea>
+				</section>
+
+				<section data-markdown>
+						<script type="text/template">
+							`$$\mathrm{d} X^{i,N}_t = V^{i,N}_t \mathrm{d} t$$`
+				      `$$   \mathrm{d} V^{i,N}_t = \big\lbrace G\left(M\left(t,X^{i,N}_t\right)\right)-V^{i,N}_t\big\rbrace \mathrm{d} t+\sqrt{2\sigma}\mathrm{d} W^i_t $$` <!-- .element: class="fragment" data-fragment-index="1" -->
+							`$$ \qquad (X^{i,N}_t,V^{i,N}_t) \in \mathbb{T}\times \mathbb{R}$$` <!-- .element: class="fragment" data-fragment-index="2" -->
+						</script>
+				</section>
+
+				<section data-markdown>
+						<script type="text/template">
+							`$$ \begin{array}
+							    \text{Interaction:} && \varphi \in C^{\infty}(\mathbb{T}),\quad \varphi(x) = \varphi(-x)\\[0.5em]
+							    \text{Average:} &&M(t,x) = \frac{ \frac{1}{N}\sum\limits_{\substack{j=1\\ j\neq i}}^N v^{j,N}_t\varphi \ (x - x^{j,N}_t)}{\frac{1}{N}\sum\limits_{\substack{j=1\\ j\neq i}}^N \varphi \ (x - x^{j,N}_t)},\\[0.5em]
+							    \text{Herding:} &&G(u) = \frac{u+\text{sgn}(u)}{2}
+							\end{array}$$`
+						</script>
+				</section>
+
+				<section data-markdown>
+						<script type="text/template">
+						What does $G$ do?
+						</script>
+				</section>
+
+				<section data-markdown>
+						<script type="text/template">
+							`$$\mathrm{d} X^{i,N}_t = V^{i,N}_t \mathrm{d} t$$`
+							`$$   \mathrm{d} V^{i,N}_t = \big\lbrace G\left(M\left(t,X^{i,N}_t\right)\right)-V^{i,N}_t\big\rbrace \mathrm{d} t+\sqrt{2\sigma}\mathrm{d} W^i_t $$`
+							`$$ \varphi(x) = \mathbb{I}_{\left[0,\gamma L\right]}(x) $$`  <!-- .element: class="fragment" data-fragment-index="1" -->
+						</script>
+				</section>
+
+
+			<section>
+				<video class="stretch"  loop controls><source type="video/mp4" src="two_particle_move.mp4" />
+			</section>
+
+			<section>
+				<video class="stretch"  loop controls><source type="video/mp4" src="three_particle_move.mp4" />
+			</section>
+
+			<section>
+				<video class="stretch"  loop controls><source type="video/mp4" src="many_particle.mp4" />
+			</section>
+
+			<section data-markdown>
+				<script type="text/template">
+					#### Questions
+					- When does the particle system agree with the PDE?
+
+					- Can we characterise the long-time dynamics of the system?
+
+					- Can we produce clusters?
+
+					- How does the range of interaction affect speed of convergence?
+				</script>
+			</section>
+
+			<section data-markdown>
+				<script type="text/template">
+					- Interacting systems are ubiquitous in nature
+
+					- Models of flocks fall into two main categories
+
+					- Models are typically nonlinear and nonlocal making them difficult (and interesting!) to work with
+
+				</script>
+			</section>
+
+
+
+			<section
+			data-background-video="http://collectivebehaviour.com/wp-content/uploads/2016/01/LocustTracking-iPhone.m4v?_=1"
+			data-background-video-loop data-background-video-muted
+			>
+
+			</section>
+
+			<section data-markdown>
+				<script type="text/template">
+						- [*starlings*, Jo Kroese (2018)](https://github.com/joekroese/starlings)
+						- [*An advection-diffusion-reaction model for the estimation of
+						fish movement parameters from tagging data, with application
+						to skipjack tuna (Katsuwonus pelamis)*, Sibert et al. (1999)](https://www.researchgate.net/publication/249531429_An_advection-diffusion-reaction_model_for_the_estimation_of_fish_movement_parameters_from_tagging_data_with_application_to_skipjack_tuna_Katsuwonus_pelamis)
+						- [*Efficiency of island homing by sea turtles under multimodal
+						navigating strategies*, Painter and Plochocka, (2019)](https://pureapps2.hw.ac.uk/ws/portalfiles/portal/23311006/PainterPlochocka2018.pdf)
+						- [*A Nonlinear Kinetic Model of Self-Propelled Particles with
+						Multiple Equilibria*, Buttá, Flandoli, Ottobre, Zegarlinski
+						(2019)](https://arxiv.org/pdf/1804.01247.pdf)
+						- [*Interacting Particle Systems*, TH](https://github.com/Tom271/InteractingParticleSystems)
+</script>
+			</section>
+
+			<section data-background-video="antmill.mp4">
+			</section>
+
+
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				hash: true,
+				math: {
+					mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+					config: 'TeX-AMS_HTML-full', // See http://docs.mathjax.org/en/latest/config-files.html
+					// pass other options into `MathJax.Hub.Config()`
+					TeX: { Macros: { RR: "{\\bf R}" } }
+				},
+				transition: 'none',
+
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/highlight/highlight.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/math/math.js', async: true }
+
+				]
+			});
+		</script>
+
+	</body>
+</html>
